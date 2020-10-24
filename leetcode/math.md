@@ -2,6 +2,7 @@
 
 + [Reverse Integer](#reverse-integer)
 + [Palindrome Number](#palindrome-number)
++ [Fizz Buzz](#fizz-buzz)
 
 ## Reverse Integer
 
@@ -49,3 +50,27 @@ def isPalindrome(self, x: int) -> bool:
     return ret
 ```
 
+## Fizz Buzz
+
+
+https://leetcode.com/problems/fizz-buzz/
+
+```python
+def fizzBuzz(self, n: int) -> List[str]:
+    sch = 1
+    lst = []       
+    while sch <= n:
+        if (sch % 3 == 0) and (sch % 5 == 0) :
+            lst.append("FizzBuzz")
+        else:
+            if sch % 3 == 0:
+                lst.append("Fizz")
+            else:
+                if sch % 5 == 0:
+                    lst.append("Buzz")
+                else:      
+                    a = str(sch)
+                    lst.append(a)
+        sch = sch + 1   
+    return lst
+```
