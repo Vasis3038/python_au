@@ -3,6 +3,7 @@
 + [Reverse Integer](#reverse-integer)
 + [Palindrome Number](#palindrome-number)
 + [Fizz Buzz](#fizz-buzz)
++ [Base 7](#base-7)
 
 ## Reverse Integer
 
@@ -73,4 +74,27 @@ def fizzBuzz(self, n: int) -> List[str]:
                     lst.append(a)
         sch = sch + 1   
     return lst
+```
+
+## Base 7
+
+
+https://leetcode.com/problems/base-7/submissions/
+
+```python
+def convertToBase7(self, num: int) -> str:
+    a = []
+    t = num
+    if num < 0:
+        num *= -1
+    if num == 0:
+        return '0'
+    while num > 0:
+        b = str(num % 7)
+        a.append(b)
+        num = num // 7
+    if t < 0:
+        a.append('-')
+    a.reverse()
+    return "".join(a)
 ```
