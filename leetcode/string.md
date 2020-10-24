@@ -1,6 +1,7 @@
 # string
 
 + [valid anagram](valid-anagram)
++ [reverse-string](reverse-string)
 
 ## Valid Anagram
 
@@ -21,4 +22,17 @@ def isAnagram(self, s: str, t: str) -> bool:
             return 0
         n -= 1
     return 1
+```
+
+## Reverse String
+
+
+https://leetcode.com/problems/reverse-string/
+
+```python
+def reverseString(self, s: List[str]) -> None:
+    for i in range (len(s)):
+        s.insert(i, s[len(s)-1])
+        del s[len(s)-1]
+    return s
 ```
