@@ -1,0 +1,10 @@
+class Poin:
+
+class Triangle:
+
+class FileUtils:
+    def _init_(self, filename):
+
+    def get_all_lines(self):
+
+    def __str__(self):
