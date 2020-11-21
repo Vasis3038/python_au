@@ -1,6 +1,13 @@
 class Poin:
+    def _init_(self, x, y):
+        self.x = x
+        self.y = y
 
 class Triangle:
+    def _init_(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
 
 class FileUtils:
     def _init_(self, filename):
