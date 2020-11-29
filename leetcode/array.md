@@ -4,6 +4,7 @@
 + [Reshape the Matrix](reshape-the-matrix)
 + [Flipping an Image](flipping-an-image)
 + [Transpose Matrix](transpose_matrix)
++ [Move Zeroes](move-zeroes)
 
 ## Max Consecutive Ones
 
@@ -79,4 +80,20 @@ def transpose(self, A: List[List[int]]) -> List[List[int]]:
             B[k].append(A[i][k])
             k += 1
     return B
+```
+
+##  Move Zeroes
+
+
+https://leetcode.com/problems/move-zeroes/
+
+```python
+def moveZeroes(self, nums: List[int]) -> None:
+    j = 0
+    for i in range(len(nums)):
+        if nums[i] is not 0:
+            nums[j] = nums[i]
+            j += 1      
+    for i in range(j, len(nums)):
+        nums[i] = 0
 ```
