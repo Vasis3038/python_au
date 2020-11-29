@@ -4,6 +4,7 @@
 + [Palindrome Number](#palindrome-number)
 + [Fizz Buzz](#fizz-buzz)
 + [Base 7](#base-7)
++ [Fibonacci Number](#fibonacci-number)
 
 ## Reverse Integer
 
@@ -97,4 +98,27 @@ def convertToBase7(self, num: int) -> str:
         a.append('-')
     a.reverse()
     return "".join(a)
+```
+
+## Fibonacci Number
+
+
+https://leetcode.com/problems/fibonacci-number/
+
+```python
+def fib(self, N: int) -> int:
+    a = 0
+    b = 1
+    c = 0
+    sch = 1
+    if N == 0:
+        return 0
+    if N == 1:
+        return 1
+    while(sch < N):
+        c = a + b
+        a = b
+        b = c
+        sch += 1
+    return c
 ```
