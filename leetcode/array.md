@@ -2,6 +2,7 @@
 
 + [Max Consecutive Ones](max-consecutive-ones)
 + [Reshape the Matrix](reshape-the-matrix)
++ [Flipping an Image](flipping-an-image)
 
 ## Max Consecutive Ones
 
@@ -45,4 +46,18 @@ def matrixReshape(self, nums: List[List[int]], r: int, c: int) -> List[List[int]
             k += 1
             
     return newLst 
+```
+
+## Flipping an Image
+
+
+https://leetcode.com/problems/flipping-an-image/
+
+```python
+def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+    for i in range(len(A)):
+        A[i].reverse()
+        for j in range(len(A[i])):
+            A[i][j] = 1 - A[i][j]
+    return A
 ```
