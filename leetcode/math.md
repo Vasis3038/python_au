@@ -5,6 +5,7 @@
 + [Fizz Buzz](#fizz-buzz)
 + [Base 7](#base-7)
 + [Fibonacci Number](#fibonacci-number)
++ [Sqrt(x)](#sqrt(x)) 
 
 ## Reverse Integer
 
@@ -121,4 +122,17 @@ def fib(self, N: int) -> int:
         b = c
         sch += 1
     return c
+```
+
+## Sqrt(x)
+
+
+https://leetcode.com/problems/sqrtx/
+
+```python
+def mySqrt(self, x: int) -> int:
+    n = 0
+    while (n+1) * (n+1) <= x:
+            n = n + 1
+    return n
 ```
