@@ -1,7 +1,8 @@
 # string
 
-+ [valid anagram](valid-anagram)
-+ [reverse-string](reverse-string)
++ [Valid Anagram](valid-anagram)
++ [Reverse String](reverse-string)
++ [Reverse Vowels of a String](reverse-vowels-of-a-string)
 
 ## Valid Anagram
 
@@ -34,5 +35,28 @@ def reverseString(self, s: List[str]) -> None:
     for i in range (len(s)):
         s.insert(i, s[len(s)-1])
         del s[len(s)-1]
+    return s
+```
+
+## Reverse Vowels of a String
+
+
+https://leetcode.com/problems/reverse-vowels-of-a-string/
+
+```python
+def reverseVowels(self, s: str) -> str:
+    vowels = ['a', 'e', 'i', 'o', 'u','A','E','I','O','U']
+    s = list(s)
+    lst = []
+    for i, letter in enumerate(s):
+        if letter in vowels:
+            lst.append(s[i])
+    sch = 1
+    
+    for i, letter in enumerate(s):
+        if letter in vowels:
+            s[i]=lst[len(lst) - sch]
+            sch += 1
+    s = ''.join(s)
     return s
 ```
