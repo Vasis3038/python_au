@@ -3,6 +3,7 @@
 + [Maximum Depth of Binary Tree](#maximum-depth-of-binary-tree)
 + [Binary Tree Inorder Traversal](#binary-tree-inorder-traversal)
 + [Invert Binary Tree](#invert-binary-tree)
++ [Binary Tree Level Order Traversal](binary_tree_level_order_traversal)
 
 ## Maximum Depth of Binary Tree
 
@@ -47,7 +48,9 @@ def inorderTraversal(self, root: TreeNode) -> List[int]:
 
 ## Invert Binary Tree
 
+
 https://leetcode.com/problems/invert-binary-tree/
+
 
 ```python
 def invert(self, node):
@@ -60,4 +63,26 @@ def invert(self, node):
 def invertTree(self, root: TreeNode) -> TreeNode:
     self.invert(root)
     return root
+```
+
+## Binary Tree Level Order Traversal
+
+
+https://leetcode.com/problems/binary-tree-level-order-traversal/
+
+```python
+def BFS(self, node, res, floor):
+    if node is None:
+        return
+    if floor > len(res):
+        res.append([])
+    res[floor-1].append(node.val)
+    self.BFS(node.left, res, floor + 1)
+    self.BFS(node.right, res, floor + 1)
+    return res
+        
+def levelOrder(self, root: TreeNode) -> List[List[int]]:
+    res = []
+    self.BFS(root, res, 1)
+    return res
 ```
