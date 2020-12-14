@@ -5,6 +5,7 @@
 + [Invert Binary Tree](#invert-binary-tree)
 + [Binary Tree Level Order Traversal](binary_tree_level_order_traversal)
 + [Kth Smallest Element in a BST](kth-smallest-element-in-a-bst)
++ [Validate Binary Search Tree](validate-binary-search-tree)
 
 ## Maximum Depth of Binary Tree
 
@@ -106,4 +107,21 @@ def kthSmallest(self, root: TreeNode, k: int) -> int:
     self.collect(root, order)
     order.sort()
     return order[k-1]
+```
+
+## Validate Binary Search Tree
+
+
+https://leetcode.com/problems/validate-binary-search-tree/
+
+```python
+def check(self, node, l, r):
+    if node is None:
+        return 1
+    if l < node.val < r:  
+        return self.check(node.left, l, node.val) * self.check(node.right, node.val, r)
+    return 0
+        
+def isValidBST(self, root: TreeNode, l = float('-inf'), r = float('inf')):
+    return self.check(root, -inf, +inf)
 ```
