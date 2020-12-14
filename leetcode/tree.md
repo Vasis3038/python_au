@@ -6,6 +6,7 @@
 + [Binary Tree Level Order Traversal](binary_tree_level_order_traversal)
 + [Kth Smallest Element in a BST](kth-smallest-element-in-a-bst)
 + [Validate Binary Search Tree](validate-binary-search-tree)
++ [Symmetric Tree](symmetric-tree)
 
 ## Maximum Depth of Binary Tree
 
@@ -124,4 +125,22 @@ def check(self, node, l, r):
         
 def isValidBST(self, root: TreeNode, l = float('-inf'), r = float('inf')):
     return self.check(root, -inf, +inf)
+```
+
+## Symmetric Tree
+
+
+https://leetcode.com/problems/symmetric-tree/
+
+```python
+def check(self, node, node2):
+    if node is None and node2 is None:
+        return 1
+    if node is not None and node2 is not None:
+        if node.val == node2.val:
+            return(self.check(node.left, node2.right) * self.check(node.right, node2.left))
+    return 0
+        
+def isSymmetric(self, root: TreeNode):
+    return self.check(root, root)
 ```
