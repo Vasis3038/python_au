@@ -3,10 +3,11 @@
 + [Maximum Depth of Binary Tree](#maximum-depth-of-binary-tree)
 + [Binary Tree Inorder Traversal](#binary-tree-inorder-traversal)
 + [Invert Binary Tree](#invert-binary-tree)
-+ [Binary Tree Level Order Traversal](binary_tree_level_order_traversal)
-+ [Kth Smallest Element in a BST](kth-smallest-element-in-a-bst)
-+ [Validate Binary Search Tree](validate-binary-search-tree)
++ [Binary Tree Level Order Traversal](#binary_tree_level_order_traversal)
++ [Kth Smallest Element in a BST](#kth-smallest-element-in-a-bst)
++ [Validate Binary Search Tree](#validate-binary-search-tree)
 + [Symmetric Tree](#symmetric-tree)
++ [Binary Search Tree Iterator](#binary-search-tree-iterator)
 
 ## Maximum Depth of Binary Tree
 
@@ -143,4 +144,32 @@ def check(self, node, node2):
         
 def isSymmetric(self, root: TreeNode):
     return self.check(root, root)
+```
+
+## Binary Search Tree Iterator
+
+
+https://leetcode.com/problems/binary-search-tree-iterator/
+
+```python
+def __init__(self, root: TreeNode):
+    self.root = root
+    self.ord = []
+    node = root
+    while node:
+        self.ord.append(node)
+        node = node.left
+        
+def next(self) -> int:
+    node = self.ord.pop()
+    if node.right is not None:
+        self.ord.append(node.right)
+        curr = self.ord[-1]
+        while curr.left is not None:
+            self.ord.append(curr.left)
+            curr = curr.left
+    return node.val        
+        
+def hasNext(self) -> bool:
+    return len(self.ord) != 0 
 ```
