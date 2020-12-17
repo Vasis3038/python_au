@@ -6,7 +6,7 @@
 + [Binary Tree Level Order Traversal](binary_tree_level_order_traversal)
 + [Kth Smallest Element in a BST](kth-smallest-element-in-a-bst)
 + [Validate Binary Search Tree](validate-binary-search-tree)
-+ [Symmetric Tree](symmetric-tree)
++ [Symmetric Tree](#symmetric-tree)
 
 ## Maximum Depth of Binary Tree
 
