@@ -5,7 +5,8 @@
 + [Fizz Buzz](#fizz-buzz)
 + [Base 7](#base-7)
 + [Fibonacci Number](#fibonacci-number)
-+ [Sqrt(x)](#sqrt(x)) 
++ [Sqrt(x)](#sqrt(x))
++ [Largest Perimeter Triangle](#largest-perimeter-triangle)
 
 ## Reverse Integer
 
@@ -135,4 +136,18 @@ def mySqrt(self, x: int) -> int:
     while (n+1) * (n+1) <= x:
             n = n + 1
     return n
+```
+
+##Largest Perimeter Triangle
+
+
+https://leetcode.com/problems/largest-perimeter-triangle/
+
+```python
+def largestPerimeter(self, A: List[int]) -> int:
+    A.sort(reverse = True)
+    for i in range(len(A)-2):
+        if A[i] < A[i+1] + A[i+2]:
+            return A[i] + A[i+1] + A[i+2]
+    return 0
 ```
