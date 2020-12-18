@@ -1,10 +1,11 @@
 # array
 
-+ [Max Consecutive Ones](max-consecutive-ones)
-+ [Reshape the Matrix](reshape-the-matrix)
-+ [Flipping an Image](flipping-an-image)
-+ [Transpose Matrix](transpose_matrix)
-+ [Move Zeroes](move-zeroes)
++ [Max Consecutive Ones](#max-consecutive-ones)
++ [Reshape the Matrix](#reshape-the-matrix)
++ [Flipping an Image](#flipping-an-image)
++ [Transpose Matrix](#transpose_matrix)
++ [Move Zeroes](#move-zeroes)
++ [Image Smoother](#image-smoother)
 
 ## Max Consecutive Ones
 
@@ -96,4 +97,26 @@ def moveZeroes(self, nums: List[int]) -> None:
             j += 1      
     for i in range(j, len(nums)):
         nums[i] = 0
+```
+
+## Image Smoother
+
+
+https://leetcode.com/problems/image-smoother/
+
+```python
+def imageSmoother(self, M: List[List[int]]) -> List[List[int]]:
+    lenm = len(M)
+    lenn = len(M[0])
+    M2 = copy.deepcopy(M)
+    for i in range(lenm):
+        M[i].append(-1)
+    M.append([-1] * (lenn+1))
+    for i in range(lenm):
+        for j in range(lenn):
+            sum1 = [M[i-1][j-1] , M[i][j-1] , M[i+1][j-1] , M[i-1][j] , M[i+1][j] , M[i-1][j+1] , M[i][j+1] , M[i+1][j+1]]
+            sum2 = sum1.count(-1)
+            M2[i][j] += sum(sum1) + sum2
+            M2[i][j] = int(M2[i][j]//(9-sum2))
+    return M2
 ```
