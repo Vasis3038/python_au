@@ -8,6 +8,7 @@
 + [Linked List Cycle II](#linked-list-cycle-II)
 + [Linked List Cycle](#linked-list-cycle)
 + [Reorder List](#reorder-list)
++ [Intersection of Two Linked Lists](#intersection-of-two-linked-lists)
 
 ## Reverse Linked List
 
@@ -232,4 +233,41 @@ def reorderList(self, head: ListNode) -> None:
         head2 = cur2
     head.next = cur2
     return head3
+```
+
+## Intersection of Two Linked Lists
+
+
+https://leetcode.com/problems/intersection-of-two-linked-lists/
+
+```python
+def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
+    cura = headA
+    curb = headB
+    lena = 0
+    lenb = 0
+    while cura != None:
+        lena += 1
+        cura = cura.next
+    while curb != None:
+        lenb += 1  
+        curb = curb.next
+    if lena > lenb:
+        cura = headB
+        curb = headA
+        a = lena
+        lena = lenb
+        lenb = a
+    else:
+        cura = headA
+        curb = headB
+    while lenb != lena:
+        curb = curb.next
+        lenb -= 1
+    while curb != cura:
+        if cura is None:
+            return 0
+        cura = cura.next
+        curb = curb.next
+    return cura
 ```
