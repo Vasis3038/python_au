@@ -9,6 +9,7 @@
 + [Linked List Cycle](#linked-list-cycle)
 + [Reorder List](#reorder-list)
 + [Intersection of Two Linked Lists](#intersection-of-two-linked-lists)
++ [Sort List](#sort-list)
 
 ## Reverse Linked List
 
@@ -270,4 +271,43 @@ def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
         cura = cura.next
         curb = curb.next
     return cura
+```
+
+## Sort List
+
+
+https://leetcode.com/problems/sort-list/
+
+```python
+def merge(self, l1: ListNode, l2: ListNode) -> ListNode:
+    if not l1: 
+        return l2
+   if not l2: 
+        return l1
+    if l1.val < l2.val:
+        left, right = l1, l2 
+    else:
+        left, right = l2, l1
+    res = left
+    while left.next and right:
+        if right.val < left.next.val:
+            temp = right.next
+            right.next = left.next
+            left.next = right
+            right = temp
+        left = left.next    
+    if right:
+        left.next = right
+    return res
+
+def sortList(self, head: ListNode) -> ListNode:
+    if head is None or head.next is None:
+        return head
+    p, s, f = None, head, head
+    while f and f.next:
+            p = s
+            s = s.next
+            f = f.next.next
+    p.next = None
+    return self.merge(self.sortList(head), self.sortList(s))
 ```
