@@ -84,19 +84,24 @@ https://leetcode.com/problems/merge-two-sorted-lists/
 
 ```python
 def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-    sorted_list = ListNode()
-    cur = sorted_list    
-    while l1 is not None and l2 is not None:
-        if l1.val < l2.val:
-            cur.next = l1
-            l1 = l1.next
-        else:
-            cur.next = l2
-            l2 = l2.next
-        cur = cur.next       
-    if l1 is None:
-        cur.next = l2
-    if l2 is None:
-        cur.next = l1   
+    if not l1: 
+        return l2
+    if not l2: 
+        return l1
+    if l1.val < l2.val:
+        left, right = l1, l2 
+    else:
+        left, right = l2, l1
+    res = left
+    while left.next and right:
+        if right.val < left.next.val:
+            temp = right.next
+            right.next = left.next
+            left.next = right
+            right = temp
+        left = left.next   
+    if right:
+        left.next = right
+    return res
     return sorted_list.next
 ```
