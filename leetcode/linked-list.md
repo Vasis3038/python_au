@@ -7,6 +7,7 @@
 + [Remove Nth Node From End of List](#remove-nth-node-from-end-of-list)
 + [Linked List Cycle II](#linked-list-cycle-II)
 + [Linked List Cycle](#linked-list-cycle)
++ [Reorder List](#reorder-list)
 
 ## Reverse Linked List
 
@@ -170,4 +171,65 @@ def hasCycle(self, head: ListNode) -> bool:
         if f == s:
             return 1
     return 0
+```
+
+## Reorder List
+
+
+https://leetcode.com/problems/reorder-list/
+
+```python
+def get_middle_of_list(self, head):
+    if head is None or head.next is None:
+        return
+    one = head
+    two = head
+    while (two != None) and (two.next != None):
+        one = one.next
+        if two.next == None:
+            two = two.next
+        else:
+            two = two.next.next
+    p = head
+    while p.next is not one:
+        p = p.next
+    p.next = None
+    return one
+    
+def reverse_list(self, head):
+    cur = head
+    Next = None
+    prev = None
+    while cur != None:
+        Next = cur.next
+        cur.next = prev
+        prev = cur
+        cur = Next
+    return prev 
+ 
+def reorderList(self, head: ListNode) -> None:
+    head3 = head
+    cur = ListNode()
+    if head is None or head.next is None:
+        return
+    if head.next.next is None:
+        return
+    if head.next.next.next is None:
+        cur = head.next
+        head.next = head.next.next
+        head.next.next = cur
+        cur.next = None
+        return
+    head2 = self.get_middle_of_list(head)
+    head2 = self.reverse_list(head2)
+    cur2 = ListNode()
+    while(head.next != None and head2.next != None):
+        cur = head.next
+        head.next = head2
+        cur2 = head2.next
+        head.next.next = cur
+        head = head.next.next
+        head2 = cur2
+    head.next = cur2
+    return head3
 ```
