@@ -1,5 +1,6 @@
 + [Non-overlapping Intervals](#non-overlapping-intervals)
 + [Merge Intervals](#merge-intervals)
++ [Insert Interval](#insert-interval)
 
 ## Non-overlapping Intervals
 
@@ -42,4 +43,26 @@ def merge(self, intervals: List[List[int]]) -> List[List[int]]:
             i -= 1
         i += 1
     return intervals 
+```
+
+## Insert Interval
+
+
+https://leetcode.com/problems/insert-interval/
+
+```python
+def insert(self, intervals, newInterval):
+    intervals.append(newInterval)
+    intervals.sort()
+    i = 0
+    while i < len(intervals) - 1:
+        if intervals[i][1] >= intervals[i + 1][0]:
+            if intervals[i][1] >= intervals[i + 1][1]:
+                del intervals[i + 1]
+            else:
+                intervals[i][1] = intervals[i + 1][1]
+                del intervals[i + 1]
+            i = i - 1
+        i += 1
+    return intervals
 ```
