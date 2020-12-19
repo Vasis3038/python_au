@@ -1,17 +1,16 @@
 import unittest
 from main import LeetCodeSource
 
-class TestLeetCodeSource(unittest.TestCase):
 
+class TestTriangle(unittest.TestCase):
     def test_get_md_solution_link(self):
-        test1 = LeetCodeSource("Reverse Integer", "https://leetcode.com/problems/reverse-integer/", "iwntslp")
-        expect = "+[Reverse Integer](#reverse-integer)"
+         first = LeetCodeSource("7. Reverse Integer", "problems/reverse-integer/", "ddddd")
+         expect = "+[Reverse Integer](#reverse-integer)"
 
-        result = test1.get_md_solution_link()
+         result = first.get_md_solution_link()
 
-        self.assertEqual(expect, result)
+         self.assertEqual(expect, result)
 
 
-
-    if __name__ == '__main__':
-        unittest.main()
+if __name__ == '__main__':
+    unittest.main()
