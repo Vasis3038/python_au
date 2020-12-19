@@ -1,85 +1,52 @@
-def delstr(string, index):
-    s = list(string) # конвертируем в список
-    del s[index] # удаляем элемент с индексом index
-    return "".join(s) # соединяем в строку и возвращаем результат в место вызова
+import sys
 
-def insertstr(string, index, stuff):
-    s = list(string) # конвертируем в список
-    s.insert(index, stuff) # добавляет элемент с индексом index
-    return "".join(s) # соединяем в строку и возвращаем результат в место вызова
+class LeetCodeSource:
+    def __init__(self, title, link, code):
+        self.title = title.split('. ')[1].rstrip('\n')
+        self.link  = link.rstrip('\n')
+        self.code = code
 
-def writecorrectMD(newmd): # оформление в маркдаун
-    for i in range (len(newmd)):
-        result.write(newmd[i])
-        result.write('\n')
-        result.write('\n')
+    def __str__(self):
+        return 'title = {}, link = {}, code = {}'.format(self.title, self.link, self.code)
 
-def writetopic(topic):# название темы задач
-    topic = "# " + topic
-    result.write(topic)
-    result.write('\n')
-    result.write('\n')
+    def get_md_solution_link(self):
+        return '+[{}](#{})'.format(self.title, self.link[9:-1])
 
-def writecode(code):
-    flag = 0
-    a = 0
-    result.write('```python')
-    result.write('\n')
-    while flag == 0: #код записывается начинаяя с функции
-        for i in range(len(code)):
-            for j in range(len(code[i])-2):
-                if code[i][j] == "d" and code[i][j+1] == "e" and code[i][j+2] == "f":
-                    flag = 1
-                    a = i
-                    break
-        if flag == 1:
-            break
-    for i in range(a, len(code)):  # запись кода с решением задачи
-        result.write(code[i])
-        result.write('\n')
-    result.write('```')
+    def get_md_formated_code(self):
+        return '```python\n{}\n```'.format('\n'.join(map(lambda x: x.rstrip('\n')[4:], self.code)))
 
-def placeforlink(newmd):# не дописал
-    n = len(newmd)
-    a = 0
-    for i in range(2, n):
-        if newmd[i+1][0] == "#" and newmd[i+1][1] == "#":
-            a = i
+def get_md_title(str):
+    return '\n\n## {}'.format(str)
+
+def read_all_lines_from_file(file_name):
+    file = open(file_name)
+    result = file.readlines()
+    file.close()
+    return result
 
 
-newmd = [] #сюда закину итоговые строки без пустых
-titlelinks = [] # здесь лежат ссылки на каждую из задач
-in_file = open(r'C:\Users\79046\Desktop\source_leetcode_data.txt','r', encoding='utf-8') # файл с решением задачи
-result = open(r'C:\Users\79046\Desktop\result.txt','a', encoding='utf-8') # MD файл
-writetopic("inervals") # название темы задач
-sourse_lines = in_file.readlines()
-sourse_lines[0] = sourse_lines[0][0:-1]
-sourse_lines[1] = sourse_lines[1][0:-1]
+def write_to_md(file_name, data):
+    file = open(file_name, 'a')
+    file.write(data)
+    file.close()
+
+def main(src, dst):
+    in_text = read_all_lines_from_file(src)
+    source = LeetCodeSource(in_text[0], in_text[1], in_text[3:])
+    source.code = source.get_md_formated_code()
+
+    md_link = source.get_md_solution_link()
+    res = read_all_lines_from_file(dst)
+    res.append(get_md_title(source.title)+'\n\n\n')
+    res.append(source.link + '\n\n')
+    res.append(source.code + '\n')
+    res.append(md_link + '\n')
+
+    #print(res)
+    for i in range(len(res)):
+        write_to_md(dst, res[i])
 
 
-#начало сбора ссылки
-flag = 0
-sch = 0
-while flag == 0: # удаление номера задачи
-    if sourse_lines[0][0] != " ":
-        sourse_lines[0] = delstr(sourse_lines[0], 0)
-    else:
-        sourse_lines[0] = delstr(sourse_lines[0], 0)
-        flag = 1
-#print(sourse_lines[0])
-dopstr = sourse_lines[0]
-dopstr2 = "## " + sourse_lines[0]
-dopstr = dopstr.lower() # понижаем регистр
-l = dopstr.split() # заменяем прбелы на тире
-dopstr = '-'.join(l)
-sourse_lines[0] = "+ [" + sourse_lines[0] + "](#" + dopstr + ")"
-titlelinks.append(sourse_lines[0])
-#конец сбора ссылки
-
-dopstr2 = "## " + sourse_lines[0]
-newmd.append(sourse_lines[0])
-newmd.append(dopstr2)
-newmd.append(sourse_lines[1])
-
-writecorrectMD(newmd)
-writecode(sourse_lines)
+if __name__ == '__main__':
+    params = sys.argv
+    main(params[1], params[2])
