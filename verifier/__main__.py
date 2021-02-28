@@ -1,7 +1,7 @@
 import requests
 import json
 
-TOKEN = f'99c16269c55c64669c0f6ec5a77bd4be0c077bf8'
+TOKEN = f'99c16269c55c64669c0f6ec5a77bd4be0c0'
 headers = {
     "Accept": "application/vnd.github.v3+json",
     "Authorization": TOKEN,
