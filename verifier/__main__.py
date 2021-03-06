@@ -28,41 +28,25 @@ def check_title(pr):
     else:
         return False
 
-def print_pr(file):
-    for lines in file:
-        line = lines[:-1]
-        name = line[29:-16]
-        print(name)
-        all_prs = requests.get(line)
-        print(all_prs)
-        for pr in all_prs.json():
-            print('state is', pr['state'])
-            print(pr['title'])
+def get_all_user_pr(user_login, repo_name, pr_state):
+    user_login = 'https://api.github.com/repos/' + user_login
+    user_login = user_login + '/' + repo_name + '/pulls'
+    res = []
+    all_prs = requests.get(user_login)
+    for pr in all_prs.json():
+        if(pr['state'] == pr_state):
+          res.append(pr)
+    return res
 
-def print_wrong_titles(file):
-    for lines in file:
-        line = lines[:-1]
-        name = line[29:-16]
-        print(name)
-        all_prs = requests.get(line)
-        print(all_prs)
-        print('Wrong titles:')
-        for pr in all_prs.json():
-            if (check_title(pr) is False):
-                print(pr['title'])
+def get_all_commits(pr):
+  print(pr['commits_url'])
+  res = []
+  message = requests.get(pr['commits_url'])
+  for commit in message.json():
+    res.append(commit['commit'])
+  return res
 
-def print_commits(file):
-    for lines in file:
-        line = lines[:-1]
-        name = line[29:-16]
-        print(name)
-        all_prs = requests.get(line)
-        print(all_prs)
-        for pr in all_prs.json():
-            print(pr['commits_url'])
-            message = requests.get(pr['commits_url'])
-            for commit in message.json():
-                print(commit['commit']['message'])
+
 
 if __name__ == '__main__':
     file = read_file()
