@@ -1,20 +1,32 @@
 import requests
 import json
 
-TOKEN = f'd89f3c9bb2c3cf2e4f7a7b16e5811a00716ebbfb'
-headers = {
-    "Accept": "application/vnd.github.v3+json",
-    "Authorization": TOKEN,
-    }
+TOKEN = '7c3965ade72b407dcca09ad7a6b944f563dafa51'
 
 PREFIXES = ['GENERATOR', 'LEETCODE', 'HEXNUMBER', 'TRIANGLE', 'ITERATOR', 'REQUESTS']
 GROUPS = ['1021', '1022']
+ACCOUNTS =['vasis3038']
 
-def check_prefixes(title):
-    title = title.split()
-    pref = title[0].split('-')
+def prepare_headers():
+    return {
+        'Authorization': 'token {}'.format(TOKEN),
+        'Content-Type': "application/json",
+        'Accept': "application/vnd.github.v3+json"
+    }
+
+def prepare_body(pull, comment):
+    return {
+        'body': f"{comment}",
+        'path': requests.get(pull['url'] + '/files', headers=prepare_headers()).json()[0]['filename'],
+        'position': 1,
+        'commit_id': pull['head']['sha']
+    }
+
+def check_prefixes(message):
+    message = message.split()
+    pref = message[0].split('-')
     if len(pref) != 2:
-        return False
+        return 'ALL WRONG'
     group = pref[1]
     pref = pref[0]
     if group in GROUPS:
@@ -25,31 +37,46 @@ def check_prefixes(title):
     else:
         return 'WRONG GROUP'
 
-def get_all_user_pr(user_login, repo_name, pr_state):
-    user_login = 'https://api.github.com/repos/' + user_login
-    user_login = user_login + '/' + repo_name + '/pulls'
+
+def get_all_user_prs(user_login, repo_name, pr_state):
+    user_login = f'https://api.github.com/repos/{user_login}/{repo_name}/pulls?state={pr_state}'
     res = []
     all_prs = requests.get(user_login)
     for pr in all_prs.json():
-        if(pr['state'] == pr_state):
           res.append(pr)
     return res
 
 def get_all_commits(pr):
-  #print(pr['commits_url'])
   res = []
   link = requests.get(pr['commits_url'])
   for commit in link.json():
     res.append(commit['commit'])
   return res
 
-#def send_pr_comment(pr, errors):
 
+def send_pr_comment(pull, comment):
+    url = pull['url'] + '/comments'
+    print(url)
+    r = requests.post(url, headers=prepare_headers(), data=json.dumps(prepare_body(pull, comment)))
+    return pull['html_url']
 
-
+def verify_pr(pr):
+    commits = get_all_commits(pr)
+    comments = []
+    if len(check_prefixes(pr['title'])) > 3:
+        comment = check_prefixes(pr['title']) + ' IN PR TITLE'
+        comments.append(comment)
+    for commit in commits:
+        if len(check_prefixes(commit['message'])) > 3:
+            comment = check_prefixes(commit['message']) + ' IN COMMIT MESSAGE'
+            comments.append(comment)
+    if len(comments) != 0:
+        send_pr_comment(pr, '\n\n'.join(comments))
 
 if __name__ == '__main__':
-    f = 'alexarlord-boop'
     repo_name = 'python_au'
     pr_state = 'open'
-    print(get_all_user_pr(f, repo_name, pr_state))
+    for acc in ACCOUNTS:
+        all_prs = get_all_user_prs(acc, repo_name, pr_state)
+        for pr in all_prs:
+            verify_pr(pr)
