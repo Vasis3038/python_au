@@ -6,6 +6,7 @@ TOKEN = '7c3965ade72b407dcca09ad7a6b944f563dafa51'
 PREFIXES = ['GENERATOR', 'LEETCODE', 'HEXNUMBER', 'TRIANGLE', 'ITERATOR', 'REQUESTS']
 GROUPS = ['1021', '1022']
 ACCOUNTS =['vasis3038']
+LOGIN = 'Vasis3038'
 
 def prepare_headers():
     return {
@@ -73,10 +74,58 @@ def verify_pr(pr):
     if len(comments) != 0:
         send_pr_comment(pr, '\n\n'.join(comments))
 
+def compare_dates(date1, date2):#"2020-10-02T22:06:46Z" ['2020','10','02','22','06','46']
+    if date1[0] > date2[0]:
+        return date1
+    elif date1[0] == date2[0]:
+        if date1[1] > date2[1]:
+            return date1
+        elif date1[1] == date2[1]:
+            if date1[2] > date2[2]:
+                return date1
+            elif date1[2] == date2[2]:
+                if date1[3] > date2[3]:
+                    return date1
+                elif date1[3] == date2[3]:
+                    if date1[4] > date2[4]:
+                        return date1
+                    elif date1[4] == date2[4]:
+                        if date1[5] > date2[5]:
+                            return date1
+                        elif date1[5] == date2[5]:
+                            return 0
+    return date2
+
+def find_date(all_prs):
+    M = ['0','0','0','0','0','0']
+    for pr in all_prs:
+        comments = requests.get(pr['review_comments_url']).json()
+        #print(comments)
+        for comment in comments:
+            if comment['user']['login'] == LOGIN:
+                new_date = comment['created_at']
+                new_date = new_date.split('-')
+                new_date.append(new_date[2][:2])
+                new_date.append(new_date[2][3:-7])
+                new_date.append(new_date[2][6:-4])
+                new_date.append(new_date[2][9:-1])
+                new_date.pop(2)
+                M = compare_dates(M, new_date)
+                print(M)
+
 if __name__ == '__main__':
+    date = ['0','0','0','0','0','0']
     repo_name = 'python_au'
     pr_state = 'open'
+    all_prs = get_all_user_prs('vasis3038', repo_name, pr_state)
+    lst = [all_prs[0], all_prs[1], all_prs[2]]
+    find_date(lst)
     for acc in ACCOUNTS:
         all_prs = get_all_user_prs(acc, repo_name, pr_state)
+        date = find_date(all_prs)
         for pr in all_prs:
-            verify_pr(pr)
+            if compare_dates(pr['created_at'], date) != date:
+                verify_pr(pr)
+
+
+
