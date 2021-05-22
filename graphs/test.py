@@ -1,13 +1,13 @@
 import unittest
-from graphs.main import *
+from main import *
 
 
 class TestGr(unittest.TestCase):
     def test_from_str_to_dict(self):
-        lst = ['date, resource, staff_id, count\n', '2020-01, 3, 25, 10\n', '2020-02, 1, 21, 20\n', '2020-03, 3, 25, 29\n', '2020-04, 2, 21, 38\n', '2020-05, 3, 24, 44\n']
+        lst = ['date, resource, count, staff_id\n', '2020-01, 2, 10, 4\n', '2020-01, 1, 10, 2\n', '2020-02, 4, 20, 4\n', '2020-09, 1, 44, 1\n', '2020-10, 3, 34, 3\n']
         result = from_str_to_dict(lst)
         print(result)
-        expect = [{'date': '2020-01', 'resource': '3', 'staff_id': '25', 'count\n': '10\n'}, {'date': '2020-02', 'resource': '1', 'staff_id': '21', 'count\n': '20\n'}, {'date': '2020-03', 'resource': '3', 'staff_id': '25', 'count\n': '29\n'}, {'date': '2020-04', 'resource': '2', 'staff_id': '21', 'count\n': '38\n'}, {'date': '2020-05', 'resource': '3', 'staff_id': '24', 'count\n': '44\n'}]
+        expect = [{'date': '2020-01', 'resource': '2', 'count': '10', 'staff_id': '4'}, {'date': '2020-01', 'resource': '1', 'count': '10', 'staff_id': '2'}, {'date': '2020-02', 'resource': '4', 'count': '20', 'staff_id': '4'}, {'date': '2020-09', 'resource': '1', 'count': '44', 'staff_id': '1'}, {'date': '2020-10', 'resource': '3', 'count': '34', 'staff_id': '3'}]
         self.assertEqual(expect, result)
 
 if __name__ == '__main__':
