@@ -32,11 +32,10 @@ def generate_staff_ids(n):
 
 
 def generate_data_and_write(n, file_name, resource_number, staff_id=0): #staff_id = 0 если требуется вывести 3 столбца
-    if staff_id < resource_number and staff_id != 0:
-        print('some of resource are empty')
+    if (staff_id < resource_number and staff_id != 0) or resource_number <= 0:
+        print('some resources do not exist')
         return
     functions = [generate_counts_by_sin, generate_counts_by_pow, generate_counts_by_log]
-    date = generate_dates(n)
     all_data = []
     data = []
     for i in range(resource_number):
@@ -47,6 +46,7 @@ def generate_data_and_write(n, file_name, resource_number, staff_id=0): #staff_i
             data[i][j] = dates[j] + ', ' + str(i+1) + ', ' + data[i][j]
     data = list(chain.from_iterable(data))
     data2 = data.copy()
+
     if staff_id != 0:
         staff_dict = {i: [] for i in range(1, staff_id + 1)}
         while len(data2) != 0:
@@ -61,8 +61,8 @@ def generate_data_and_write(n, file_name, resource_number, staff_id=0): #staff_i
         all_data.insert(0, 'date, resource, count, staff_id\n')
     else:
         all_data = data.copy()
-        for k in range(len(all_data)):
-            all_data[k] = all_data[k] + '\n'
+        for row in all_data:
+            row += '\n'
         all_data.insert(0, 'date, resource, count\n')
     file = open(file_name, 'w')
     for i in all_data:
