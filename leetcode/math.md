@@ -7,6 +7,7 @@
 + [Fibonacci Number](#fibonacci-number)
 + [Sqrt(x)](#sqrt(x))
 + [Largest Perimeter Triangle](#largest-perimeter-triangle)
++ [K Closest Points to Origin](#k-closest-points-to-origin)
 
 ## Reverse Integer
 
@@ -138,7 +139,7 @@ def mySqrt(self, x: int) -> int:
     return n
 ```
 
-##Largest Perimeter Triangle
+## Largest Perimeter Triangle
 
 
 https://leetcode.com/problems/largest-perimeter-triangle/
@@ -150,4 +151,14 @@ def largestPerimeter(self, A: List[int]) -> int:
         if A[i] < A[i+1] + A[i+2]:
             return A[i] + A[i+1] + A[i+2]
     return 0
+```
+
+## K Closest Points to Origin
+
+
+https://leetcode.com/problems/k-closest-points-to-origin/
+
+```python
+def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+    return sorted(points, key = lambda pair:(pair[0]**2+pair[1]**2))[:k]
 ```
