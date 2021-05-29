@@ -3,7 +3,8 @@
 + [Course Schedule II](#course-schedule-II)
 + [Course Schedule](#course-schedule)
 + [Number of Islands](#number-of-islands)
-+ [Is Graph Bipartite?](#is-graph-bipartite?)
++ [Is Graph Bipartite?](#is-graph-bipartite)
++ [Cheapest Flights Within K Stops](#cheapest-flights-within-k-stops)
 
 ## Course Schedule II
 
@@ -124,3 +125,33 @@ def isBipartite(self, graph):
                         que.append(j)
     return True
 ```
+
+
+## Cheapest Flights Within K Stops
+
+https://leetcode.com/problems/cheapest-flights-within-k-stops/
+
+```python
+def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+    g = defaultdict(list)
+    print(g)
+    for f, t, p in flights:
+        g[f].append((t, p))
+    print(g)
+    M = defaultdict(int)
+    q = [(src, 0, 0)]
+    r = float('inf')
+    while q:
+        t, w, p = q.pop(0)
+        if p >= r or w > k+1:
+            continue
+        if t == dst:
+            r = min(r, p)
+        for n, np in g[t]:
+            if M[n] == 0 or M[n] > p + np:
+                M[n] = p + np
+                q.append((n, w + 1, p + np))
+    return r if r != float('inf') else -1
+```
+
+
