@@ -3,6 +3,7 @@
 + [Min Stack](#min-stack)
 + [Implement Queue using Stacks](#implement-queue-using-stacks)
 + [Implement Stack using Queues](#implement-stack-using-queues)
++ [Design Twitter](#design-twitter)
 
 ## Min Stack
 
@@ -79,4 +80,34 @@ def top(self) -> int:
 
 def empty(self) -> bool:
     return len(self.container)==0
+```
+
+
+## Design Twitter
+
+https://leetcode.com/problems/design-twitter/
+
+```python
+def __init__(self):
+    self.stack = list()
+    self.fo = defaultdict(list)
+
+def postTweet(self, userId: int, tweetId: int) -> None:
+    self.stack.append([userId,tweetId]) 
+
+def getNewsFeed(self, userId: int) -> List[int]:
+    temp = list()
+    for i in range(len(self.stack)-1,-1,-1):
+        if self.stack[i][0] == userId or self.stack[i][0] in self.fo[userId]:
+            temp.append(self.stack[i][1])
+            if len(temp) == 10:
+                break
+    return temp 
+        
+def follow(self, followerId: int, followeeId: int) -> None:
+    self.fo[followerId].append(followeeId)
+
+def unfollow(self, followerId: int, followeeId: int) -> None:
+    if followeeId in self.fo[followerId]:
+        self.fo[followerId].remove(followeeId)
 ```
