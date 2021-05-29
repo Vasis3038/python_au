@@ -7,6 +7,7 @@
 + [Cheapest Flights Within K Stops](#cheapest-flights-within-k-stops)
 + [Cheapest Flights Within K Stops](#cheapest-flights-within-k-stops)
 + [Shortest Path in Binary Matrix](#shortest-path-in-binary-matrix)
++ [Maximum Depth of N-ary Tree](#maximum-depth-of-n-ary-Tree)
 
 ## Course Schedule II
 
@@ -189,5 +190,24 @@ def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
                 q.append((x, y, d+1))
     return -1
 ```
+
+
+## Maximum Depth of N-ary Tree
+
+https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
+
+```python
+def maxDepth(self, root):
+    d = 0
+    if not root:
+        return 0
+    else:
+        for n in root.children:
+            print(n.val)
+            d = max(self.maxDepth(n) , d)  
+        return d + 1
+```
+
+
 
 
