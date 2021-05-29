@@ -5,6 +5,8 @@
 + [Number of Islands](#number-of-islands)
 + [Is Graph Bipartite?](#is-graph-bipartite)
 + [Cheapest Flights Within K Stops](#cheapest-flights-within-k-stops)
++ [Cheapest Flights Within K Stops](#cheapest-flights-within-k-stops)
++ [Shortest Path in Binary Matrix](#shortest-path-in-binary-matrix)
 
 ## Course Schedule II
 
@@ -152,6 +154,40 @@ def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int
                 M[n] = p + np
                 q.append((n, w + 1, p + np))
     return r if r != float('inf') else -1
+```
+
+
+## Shortest Path in Binary Matrix
+
+https://leetcode.com/problems/shortest-path-in-binary-matrix/
+
+```python
+def can_visit(self, i, j, grid, seen, n):
+    if i >= 0 and i < n and j >= 0 and j < n and not grid[i][j] and (i,j) not in seen:
+        return True
+    return False
+    
+
+def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+    seen = set()
+    n = len(grid)
+    if grid[0][0] or grid[n-1][n-1]:
+        return -1
+    q = deque()
+    q.append((0, 0, 1))
+    seen.add((0, 0))
+    directions = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (-1, 1), (1, -1), (-1, -1)]
+    while q:
+        i, j, d = q.popleft()
+        if i == n - 1 and j == n - 1:
+            return d    
+        for direc in directions:
+            x = i + direc[0]
+            y = j + direc[1]
+            if self.can_visit(x, y, grid, seen, n):
+                seen.add((x, y))
+                q.append((x, y, d+1))
+    return -1
 ```
 
 
